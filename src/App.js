@@ -1,28 +1,25 @@
 import PropTypes from "prop-types";
+import React from "react";
 
-function Hololive({ name, color }) {
-  return <h1 style={{ color: `${color}` }}>I like {name}</h1>;
-}
-
-const idolILike = [
-  { name: "Bae", color: "red", id: 0 },
-  { name: "Kronii", color: "blue", id: 1 },
-  { name: "Ame", color: "yellow", id: 2 },
-  { name: "Gura", color: "aqua", id: 3 },
-];
-
-function IdolDubut(idol) {
-  return <Hololive name={idol.name} color={idol.color} key={idol.id} />;
-}
-
-IdolDubut.propTypes = {
-  name: PropTypes.string.isRequired,
-  color: PropTypes.string,
-  key: PropTypes.number.isRequired,
-};
-
-function App() {
-  return <div className="App">{idolILike.map(IdolDubut)}</div>;
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
+  add = () => {
+    this.setState((current) => ({ count: current.count + 1 }));
+  };
+  minus = () => {
+    this.setState((current) => ({ count: current.count - 1 }));
+  };
+  render() {
+    return (
+      <div>
+        <h1>The number is {this.state.count}</h1>
+        <button onClick={this.add}>Plus</button>
+        <button onClick={this.minus}>Minus</button>
+      </div>
+    );
+  }
 }
 
 export default App;
