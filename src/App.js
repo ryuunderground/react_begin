@@ -1,20 +1,43 @@
-import React from "react";
-import { HashRouter, Routes, Route } from "react-router-dom";
-import About from "./routes/About";
-import Home from "./routes/Home";
-import Detail from "./routes/Detail";
-import Navigation from "./components/Navigation";
+import React, { useState } from "react";
 
 const App = () => {
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const onChange = (event) => {
+    setToDo(event.target.value);
+    console.log(toDo);
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+    console.log(toDo);
+    console.log(toDos);
+    if (toDo === "") {
+      return;
+    }
+    setToDo("");
+    setToDos((currentArray) => [toDo, ...toDos]);
+  };
   return (
-    <HashRouter>
-      <Navigation />
-      <Routes>
-        <Route path="/" exact={true} element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/movie-detail" element={<Detail />} />
-      </Routes>
-    </HashRouter>
+    <>
+      <h1>To Do List({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="write ur to do"
+        />
+        <button type="submit">Add to Do</button>
+      </form>
+      <hr />
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 
